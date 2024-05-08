@@ -1,31 +1,70 @@
 import FormPopover from "@/components/form/form-popover";
+import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import MobileSidebar from "./mobile-sidebar";
 
 export default function Navbar() {
     return (
-        <div className="h-20 w-full bg-slate-300 px-10 flex items-center justify-between fixed top-0 left-0 z-10" >
-            <div className="flex items-center gap-10">
-                <Link href="/">
-                <h2>logo</h2>
-                </Link>
-                <FormPopover align="start" side="bottom" sideOffset={18}>
+        <nav className="fixed z-50 top-0 px-4 w-full h-14 border-b shadow-sm bg-white  flex items-center">
+            <MobileSidebar/>
+            <div className="flex items-center gap-x-4">
+                <div className="hidden md:flex">
+                    <Logo />
+                </div>
 
-                <Button>Create</Button>
+                <FormPopover align="start" side="bottom" sideOffset={18}>
+                    <Button
+                        variant={"primary"}
+                        size={"sm"}
+                        className="rounded-sm hidden md:block a-auto py-1.5 px-2"
+                    >
+                        Create
+                    </Button>
+                </FormPopover>
+
+                <FormPopover>
+                    <Button
+                        variant={"primary"}
+                        size={"sm"}
+                        className="rounded-sm block md:hidden"
+                    >
+                        <Plus className="h-4 w-4" />
+                    </Button>
                 </FormPopover>
             </div>
 
-            <div>
+            <div className="ml-auto flex items-center gap-x-2">
                 <OrganizationSwitcher
                     hidePersonal
                     afterCreateOrganizationUrl={"/organization/:id"}
                     afterLeaveOrganizationUrl={"/select-org"}
                     afterSelectOrganizationUrl={"/organization/:id"}
+                    appearance={{
+                        elements: {
+                            rootBox: {
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            },
+                        },
+                    }}
                 />
-                <UserButton />
+                <UserButton
+                    afterSignOutUrl="/"
+                    appearance={{
+                        elements: {
+                            avatarBox: {
+                                height: 30,
+                                width: 30,
+                            },
+                        },
+                    }}
+                />
             </div>
-        </div>
+        </nav>
     );
 }

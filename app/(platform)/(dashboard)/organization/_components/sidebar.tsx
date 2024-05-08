@@ -62,15 +62,15 @@ export default function Sidebar({
 
     return (
         <>
-            <div>
-                <span>Workspace</span>
-                <Button variant={"ghost"} className="ml-auto">
+            <div className="font-medium text-xs flex items-center mb-1">
+                <span className="pl-4">Workspace</span>
+                <Button variant={"ghost"} className="ml-auto" type="button" size={"icon"}>
                     <Link href={"/select-org"}>
-                        <Plus />
+                        <Plus className="w-4 h4" />
                     </Link>
                 </Button>
             </div>
-            <Accordion type="multiple" defaultValue={defaultAccordionValue}>
+            <Accordion type="multiple" defaultValue={defaultAccordionValue} className="space-y-2">
                 {userMemberships.data.map(({ organization }) => (
                     <NavItem
                         key={organization.id}
