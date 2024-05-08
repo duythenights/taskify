@@ -3,6 +3,6 @@ import React from 'react'
 
 export default function SignUpPage() {
   return (
-    <SignUp/>
+    <SignUp fallbackRedirectUrl={"/"}/>
   )
 }
