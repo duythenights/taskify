@@ -20,7 +20,7 @@ export default function CardItem({ data, index }: CardItemProps) {
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
                     role="button"
-                    className="p-3 mb-2 bg-white mx-2 rounded-md"
+                    className="truncate border-2 border-transparent hover:border-black py-2 px-3 text-sm bg-white rounded-md shadow-sm transition"
                 >
                     {data.title}
                 </div>

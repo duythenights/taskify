@@ -44,7 +44,6 @@ export default function ListForm() {
         onSuccess: (data) => {
             toast.success(`List "${data.title}" created.`)
             disableEditing()
-            router.refresh()
         },
         onError: (error) => {
             toast.error(error)

@@ -6,6 +6,7 @@ import { CardForm } from "./card-form";
 import CardItem from "./card-item";
 
 import { Draggable, Droppable } from "@hello-pangea/dnd";
+import { cn } from "@/lib/utils";
 
 interface ListItemProps {
     index: number;
@@ -31,7 +32,7 @@ export default function ListItem({ index, data }: ListItemProps) {
         <Draggable draggableId={data.id} index={index}>
             {(provided) => (
                 <li
-                    className="p-3 shrink-0  rounded-md w-[272px]  select-none  min-h-[200px]"
+                    className="shrink-0 w-[272px] select-none"
                     {...provided.draggableProps}
                     ref={provided.innerRef}
                 >
@@ -46,7 +47,9 @@ export default function ListItem({ index, data }: ListItemProps) {
                                 <ol
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
-                                    className="min-h-[100px] w-full"
+                                    className={cn("mx-1 px-1 py-0.5 flex flex-col gap-y-2",
+                                        data.cards.length > 0 ? "mt-2": "mt-0"
+                                     )}
                                 >
                                     {data.cards.map((item, index) => (
                                         <CardItem

@@ -4,6 +4,7 @@ import FormSubmit from "@/components/form/form-submit";
 import { FormTextArea } from "@/components/form/form-textarea";
 import { Button } from "@/components/ui/button";
 import { useAction } from "@/hooks/use-action";
+import { cn } from "@/lib/utils";
 import { Plus, PlusCircle, X } from "lucide-react";
 import React, {
     ElementRef,
@@ -24,12 +25,12 @@ interface CardFormProps {
 
 export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
     ({ listId, disableEditing, enableEditing, isEditing, boardId }, ref) => {
+        console.log(ref)
         const formRef = useRef<ElementRef<"form">>(null);
         const { execute, fieldErrors } = useAction(createCard, {
             onSuccess: (data) => {
                 toast.success(`Card "${data.title}" added.`);
                 formRef.current?.reset();
-                
             },
             onError: (error) => {
                 toast.error(error);
@@ -67,7 +68,11 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
 
         if (isEditing) {
             return (
-                <form action={handleSubmit} ref={formRef}>
+                <form
+                    action={handleSubmit}
+                    ref={formRef}
+                    className="m-1 py-0.5 px-1 space-y-4"
+                >
                     <FormTextArea
                         id="title"
                         placeholder="Enter title for this card..."
@@ -87,10 +92,12 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
                         name="boardId"
                         defaultValue={boardId}
                     />
-                    <FormSubmit>ADD</FormSubmit>
-                    <Button onClick={disableEditing}>
-                        <X />
-                    </Button>
+                    <div className="flex items-center gap-x-1">
+                        <FormSubmit variant={"primary"} className="w-full">Add card</FormSubmit>
+                        <Button onClick={disableEditing} size={"sm"} variant={"ghost"}>
+                            <X className="w-5 h-5"/>
+                        </Button>
+                    </div>
                 </form>
             );
         }
@@ -98,9 +105,10 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
         return (
             <div className="text-black pt-2">
                 <Button
-                    className="w-full rounded-none justify-start text-sm text-neutral-400"
+                    className="w-full rounded-none justify-start text-sm text-muted-foreground"
                     variant={"ghost"}
                     onClick={() => enableEditing()}
+                    size={"sm"}
                 >
                     <Plus size={16} className="mr-2" />
                     Add a card

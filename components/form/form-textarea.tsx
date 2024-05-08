@@ -39,11 +39,13 @@ export const FormTextArea = forwardRef<HTMLTextAreaElement, FormTextAreaProps>(
     ) => {
         const { pending } = useFormStatus();
         return (
-            <div>
+            <div className="space-y-2 w-full">
+                <div className="space-y-1 w-full">
+
                 {label && (
-                    <div>
-                        <Label>{label}</Label>
-                    </div>
+                        <Label htmlFor={id}
+                       className="text-xs font-semibold text-neutral-700" 
+                        >{label}</Label>
                 )}
                 <Textarea
                     onClick={onClick}
@@ -54,12 +56,14 @@ export const FormTextArea = forwardRef<HTMLTextAreaElement, FormTextAreaProps>(
                     name={id}
                     id={id}
                     disabled={disabled || pending}
-                    className={cn(className)}
+                    className={cn(className, "resize-none focus-visible:ring-0 focus-visible:ring-offset-0 ring-0 focus:ring-0 outline-none shadow-sm")}
                     aria-describedby={`${id}-error`}
                     defaultValue={defaultValue}
                     placeholder={placeholder}
                 />
                 <FormErrors id={id} errors={errors} />
+
+                </div>
             </div>
         );
     }

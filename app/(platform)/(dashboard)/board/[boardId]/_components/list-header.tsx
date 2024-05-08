@@ -7,6 +7,7 @@ import React, { ElementRef, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import ListOptions from "./list-options";
+import { useRouter } from "next/navigation";
 
 interface ListHeaderProps {
     data: List;
@@ -18,11 +19,13 @@ export default function ListHeader({ data, onAddCard }: ListHeaderProps) {
     const formRef = useRef<ElementRef<"form">>(null);
 
     const [isEditing, setIsEditing] = useState(false);
+    const [listTitle, setListTitle] = useState(data.title)
 
     const { execute, fieldErrors} = useAction(updateList, {
         onSuccess: (data) => {
-            toast.success(`Renamed to ${data.title}`);
-            disableEditing();
+            toast.success(`Renamed to "${data.title}"`);
+            setIsEditing(false)
+             
         },
         onError: (error) => {
             toast.error("Fail to update.");
@@ -73,6 +76,8 @@ export default function ListHeader({ data, onAddCard }: ListHeaderProps) {
         });
     };
 
+    console.log("fieldErrors",fieldErrors)
+
 
     const onBlur = () =>{
         formRef.current?.requestSubmit()
@@ -84,14 +89,14 @@ export default function ListHeader({ data, onAddCard }: ListHeaderProps) {
                 <form
                     action={onSubmit}
                     ref={formRef}
-                    className="w-full h-7 flex items-center"
+                    className="flex-1 px-[2px]"
                 >
                     <FormInput
                         ref={inputRef}
-                        defaultValue={data.title}
+                        defaultValue={listTitle}
                         id="title"
                         className="text-sm px-[7px] py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition truncate bg-transparent focus:bg-white"
-                        placeholder="Enter list title"
+                        placeholder="Enter list title..."
                         errors={fieldErrors}
                         onBlur={onBlur}
 
@@ -106,7 +111,7 @@ export default function ListHeader({ data, onAddCard }: ListHeaderProps) {
                 </form>
             ) : (
                 <div
-                    className="w-full h-7 flex items-center"
+                    className="w-full text-sm px-2.5 h-7 py-1 font-medium border-transparent"
                     onClick={enableEditing}
                 >
                     {data.title}
