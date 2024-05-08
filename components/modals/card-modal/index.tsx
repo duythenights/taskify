@@ -34,16 +34,18 @@ export default function CardModal() {
 
                 <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
                     <div className="col-span-3">
-                        {!cardData ? (
-                            <Description.Skeleton />
-                        ) : (
-                            <Description data={cardData} />
-                        )}
-                        {!auditLogsData ? (
-                            <Activity.Skeleton />
-                        ) : (
-                            <Activity data={auditLogsData} />
-                        )}
+                        <div className="w-full">
+                            {!cardData ? (
+                                <Description.Skeleton />
+                            ) : (
+                                <Description data={cardData} />
+                            )}
+                            {!auditLogsData ? (
+                                <Activity.Skeleton />
+                            ) : (
+                                <Activity data={auditLogsData} />
+                            )}
+                        </div>
                     </div>
                     {!cardData ? (
                         <Actions.Skeleton />

@@ -1,5 +1,6 @@
 "use client";
 import { updateCard } from "@/actions/update-card";
+import FormSubmit from "@/components/form/form-submit";
 import { FormTextArea } from "@/components/form/form-textarea";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -36,7 +37,7 @@ export default function Description({ data }: DescriptionProps) {
                 queryKey: ["card-logs", data.id],
             });
             setDesciption(data.description);
-            disableEditing()
+            disableEditing();
 
             toast.success("Description updated.");
         },
@@ -52,7 +53,6 @@ export default function Description({ data }: DescriptionProps) {
     const disableEditing = () => {
         setIsEditing(false);
     };
-
 
     const onSubmit = (formData: FormData) => {
         const description = formData.get("description") as string;
@@ -76,46 +76,52 @@ export default function Description({ data }: DescriptionProps) {
     };
 
     return (
-        <div>
-            <div className="flex">
-                <AlignLeft />
-                <p>Description</p>
-            </div>
+        <div className="flex items-start gap-x-3 w-full">
+            <AlignLeft className="h-5 w-5 mt-0.5 text-neutral-700" />
+            <div className="w-full">
+                <p className="font-semibold text-neutral-700 mb-2">
+                    Description
+                </p>
 
-            {isEditing ? (
-                <form action={onSubmit}>
-                    <FormTextArea
-                        onKeyDown={onTextAreaKeyDown}
-                        ref={textareaRef}
-                        id="description"
-                        defaultValue={description as string}
-                        placeholder={"Enter description here..."}
-                    />
-                    <div>
-                        <Button type="submit">Save</Button>
-                        <Button variant={"ghost"} onClick={disableEditing}>Cancel</Button>
+                {isEditing ? (
+                    <form action={onSubmit} className="space-y-2">
+                        <FormTextArea
+                            onKeyDown={onTextAreaKeyDown}
+                            ref={textareaRef}
+                            id="description"
+                            defaultValue={description as string}
+                            placeholder={"Enter description here..."}
+                            className="w-full mt-2"
+                        />
+                        <div className="flex items-center gap-x-2">
+                            <FormSubmit>Save</FormSubmit> 
+                            <Button variant={"ghost"} onClick={disableEditing} size={"sm"}>
+                                Cancel
+                            </Button>
+                        </div>
+                    </form>
+                ) : (
+                    <div
+                        className="min-h-[78px] bg-neutral-200 text-sm font-medium py-3 px-3.5 rounded-md"
+                        role="button"
+                        onClick={enableEditing}
+                    >
+                        {description || "Add a more detailed description..."}
                     </div>
-                </form>
-            ) : (
-                <div
-                    className="w-full h-full mt-3 p-5 rounded-md bg-gray-400"
-                    role="button"
-                    onClick={enableEditing}
-                >
-                    {description || "Add a more detailed description..."}
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }
 
 Description.Skeleton = function DescriptionSkeleton() {
     return (
-        <div>
-            <Skeleton className="w-6 h-6 bg-neutral-400" />
-            <Skeleton className="w-6 h-6 bg-neutral-400" />
-            <Skeleton className="w-6 h-6 bg-neutral-400" />
-            <Skeleton className="w-6 h-6 bg-neutral-400" />
+        <div className="flex items-start gap-x-3 w-full">
+            <Skeleton className="w-6 h-6 bg-neutral-200" />
+            <div className="w-full">
+                <Skeleton className="w-24 h-6 mb-2 bg-neutral-200" />
+                <Skeleton className="w-full h-[78px] bg-neutral-200" />
+            </div>
         </div>
     );
 };

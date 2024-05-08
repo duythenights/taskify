@@ -8,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAction } from "@/hooks/use-action";
 import { useCardModel } from "@/hooks/use-card-modal";
 import { CardWithList } from "@/types";
+import { Copy, Trash } from "lucide-react";
 import { useParams } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
@@ -60,24 +61,26 @@ export default function Actions({ data }: ActionsProps) {
         });
     };
     return (
-        <div className="flex">
-            Actions
-            <div>
-                <Button disabled={isLoadingCopy} onClick={onCopy}>
-                    Copy
-                </Button>
-                <Button disabled={isLoadingDelete} onClick={onDelete}>
-                    Delete
-                </Button>
-            </div>
+        <div className="space-y-2">
+            <p className=" font-semibold">Actions</p>
+            <Button disabled={isLoadingCopy} onClick={onCopy} variant={"gray"} size={"inline"} className="w-full justify-start">
+                <Copy className="h-4 w-4 mr-2"/>
+                Copy
+            </Button>
+            <Button disabled={isLoadingDelete} onClick={onDelete} variant={"gray"} size={"inline"} className="w-full justify-start">
+                <Trash className="h-4 w-4 mr-2"/>
+                Delete
+            </Button>
         </div>
     );
 }
 
 Actions.Skeleton = function ActionSkeleton() {
     return (
-        <div>
-            <Skeleton className="w-4 bg-slate-200 h-4" />
+        <div className="space-y-2 mt-2">
+            <Skeleton className="w-20 h-4 bg-neutral-200" />
+            <Skeleton className="w-full h-8 bg-neutral-200" />
+            <Skeleton className="w-full h-8 bg-neutral-200" />
         </div>
     );
 };
