@@ -7,9 +7,9 @@ import { checkSubscription } from "@/lib/subscription";
 export default async function ActivityPage() {
     const isPro = await checkSubscription()
     return (
-        <div className="text-black pt-20 w-full">
+        <div className="w-full">
             <Info isPro={isPro} />
-            <Separator />
+            <Separator className="my-2" />
             <Suspense fallback={<ActivityList.Skeleton />}>
                 <ActivityList />
             </Suspense>
