@@ -7,11 +7,10 @@ import SubscriptionButton from "./_components/subscription-button";
 export default async function BillingPage() {
     const isPro = await checkSubscription();
     return (
-        <div>
+        <div className="w-full">
             <Info isPro={isPro} />
-            <Separator/>
+            <Separator className="my-2"/>
             <SubscriptionButton isPro={isPro} />
-
         </div>
     );
 }

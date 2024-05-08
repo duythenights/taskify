@@ -31,7 +31,7 @@ export default function SubscriptionButton({ isPro }: SubscriptionButtonProps) {
     };
 
     return (
-        <Button disabled={isLoading} onClick={handleClick}>
+        <Button disabled={isLoading} onClick={handleClick} variant={"primary"}>
             {isPro ? "Manage subscription" : "Upgrade to pro"}
         </Button>
     );
