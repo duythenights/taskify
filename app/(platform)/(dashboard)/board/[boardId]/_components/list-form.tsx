@@ -4,7 +4,7 @@ import ListWrapper from "./list-wrapper";
 import { Plus, X } from "lucide-react";
 import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import { FormInput } from "@/components/form/form-input";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import FormSubmit from "@/components/form/form-submit";
 import { Button } from "@/components/ui/button";
 import { useAction } from "@/hooks/use-action";
@@ -13,6 +13,7 @@ import { toast } from "sonner";
 
 export default function ListForm() {
     const params = useParams();
+    const router = useRouter()
     const formRef = useRef<ElementRef<"form">>(null);
     const inputRef = useRef<ElementRef<"input">>(null);
 
@@ -41,8 +42,9 @@ export default function ListForm() {
 
     const {isLoading, execute, fieldErrors} = useAction(createList, {
         onSuccess: (data) => {
-            toast.success("List created.")
-            setIsEditing(false)
+            toast.success(`List "${data.title}" created.`)
+            disableEditing()
+            router.refresh()
         },
         onError: (error) => {
             toast.error(error)
@@ -74,11 +76,12 @@ export default function ListForm() {
                         placeholder="Enter list title..."
                         errors={fieldErrors}
                         disabled={isLoading}
+                    
                     />
                     <input id="boardId" name="boardId" defaultValue={params.boardId} hidden />
                     <div className="flex items-center gap-x-1">
-                        <FormSubmit disabled={isLoading} className="flex-1" variant={"default"}>Add list</FormSubmit>
-                        <Button onClick={disableEditing} variant={"ghost"} size={"sm"}>
+                        <FormSubmit disabled={isLoading} className="flex-1" variant={"primary"}>Add a list</FormSubmit>
+                        <Button onClick={disableEditing} variant={"ghost"} size={"sm"} >
                             <X />
                         </Button>
                     </div>

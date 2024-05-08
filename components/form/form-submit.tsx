@@ -15,6 +15,7 @@ interface FormSubmitProps {
         | "secondary"
         | "ghost"
         | "link"
+        | "primary"
         | null
         | undefined;
 }
