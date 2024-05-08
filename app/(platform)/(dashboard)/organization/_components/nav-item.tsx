@@ -1,8 +1,10 @@
 import { AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { AccordionContent } from "@radix-ui/react-accordion";
 import { Activity, CreditCard, Layout, Settings } from "lucide-react";
+import { DraftModeProvider } from "next/dist/server/async-storage/draft-mode-provider";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -91,4 +93,15 @@ export default function NavItem({
             </AccordionContent>
         </AccordionItem>
     );
+}
+
+NavItem.Skeleton = function SkeletonNavItem() {
+    return (
+        <div className="flex items-center gap-x-2">
+            <div className="w-10 h10">
+                <Skeleton className="h-10 w-full"/>
+            </div>
+            <Skeleton className="h-10 w-full"/>
+        </div>
+    )
 }

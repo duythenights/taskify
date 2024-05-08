@@ -11,9 +11,9 @@ export default function SettingsPage() {
                             boxShadow: "none",
                             width: "100%",
                         },
-                        card: {
+                        cardBox: {
                             border: "1px solid #e5e5e5",
-                            boxshadow: "none",
+                            boxShadow: "none",
                             width: "100%",
                         },
                     },

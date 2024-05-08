@@ -12,64 +12,60 @@ import { auth } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
 import { getAvailableCount } from "@/lib/org-limit";
 import { checkSubscription } from "@/lib/subscription";
-
-
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const BoardList = async () => {
-    const {orgId} = auth()
+    const { orgId } = auth();
 
-    if(!orgId) {
-        redirect("/select-org")
+    if (!orgId) {
+        redirect("/select-org");
     }
 
     const boards = await db.board.findMany({
         where: {
-            orgId
+            orgId,
         },
-        orderBy:{
-            createdAt: "desc"
-        }
-    })
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
 
-    const availableCount = await getAvailableCount()
-    const isPro = await checkSubscription()
-
+    const availableCount = await getAvailableCount();
+    const isPro = await checkSubscription();
 
     return (
-        <div>
-            <div className="flex">
-                <User2 />
+        <div className="space-y-4">
+            <div className="flex items-center font-semibold text-lg text-neutral-700">
+                <User2 className="h-6 w-6 mr-2" />
                 Your board
             </div>
-            <div className="grid grid-cols-2 md:grid-flow-col-3 lg:grid-flow-col-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 {boards.map((item) => (
-                    <Link href={`/board/${item.id}`} key={item.id}>
-                        <div className="relative">
-                            <Image
-                                width={40}
-                                height={40}
-                                src={item.imageThumbUrl}
-                                alt="board"
-                                className="object-cover"
-                            />
-                            <p className="absolute top-0 left-0">
-                                {item.title}
-                            </p>
-                        </div>
+                    <Link href={`/board/${item.id}`} key={item.id} style={{
+                        backgroundImage: `url(${item.imageThumbUrl})`
+                    }}
+                        className="group relative aspect-video bg-no-repeat bg-center bg-cover  rounded-sm  h-full w-full p-2 n" 
+                    >
+                       <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition rounded-sm"/> 
+                       <p className="relative font-semibold text-white">
+                        {item.title}
+                       </p>
                     </Link>
                 ))}
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                <FormPopover side="right" sideOffset={50}>
-                    <div className="w-full h-full bg-slate-200">
-                        <p>Create new board</p>
+                <FormPopover side="right" sideOffset={10}>
+                    <div className="aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition">
+                        <p className="text-sm">Create new board</p>
 
-                        <span>{isPro ? "Unlimited" :availableCount} remaining</span>
+                        <span className="text-xs">
+                            {isPro ? "Unlimited" : availableCount} remaining
+                        </span>
                         <Hint
-                            sideOffset={10}
-                            description={`Free can have 5 ....`}
+                            sideOffset={40}
+                            description={`Free Workspace can have up to 5 open boards. For unlimited boards upgrade this workspace`}
                         >
-                            <HelpCircle className="" />
+                            <HelpCircle className="absolute bottom-2 right-2 h-[14px] w-[14px]" />
                         </Hint>
                     </div>
                 </FormPopover>
@@ -79,5 +75,14 @@ export const BoardList = async () => {
 };
 
 BoardList.Skeleton = function SkeletonList() {
-    return <div className="">Loading.......</div>;
+    return <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <Skeleton className="aspect-video h-full w-full p-2x"/>
+        <Skeleton className="aspect-video h-full w-full p-2x"/>
+        <Skeleton className="aspect-video h-full w-full p-2x"/>
+        <Skeleton className="aspect-video h-full w-full p-2x"/>
+        <Skeleton className="aspect-video h-full w-full p-2x"/>
+        <Skeleton className="aspect-video h-full w-full p-2x"/>
+        <Skeleton className="aspect-video h-full w-full p-2x"/>
+
+    </div>;
 };

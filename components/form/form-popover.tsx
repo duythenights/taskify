@@ -27,7 +27,7 @@ interface FormPopoverProps {
 export default function FormPopover({
     children,
     align,
-    side = "left",
+    side = "bottom",
     sideOffset = 0,
 }: FormPopoverProps) {
     const closedRef = useRef<ElementRef<"button">>(null);
@@ -61,25 +61,32 @@ export default function FormPopover({
                     align={align}
                     side={side}
                     sideOffset={sideOffset}
+                    className="w-80 pt-3"
                 >
-                    <div>Create board</div>
+                    <div className="text-sm font-medium text-center text-neutral-600 pb-4">
+                        Create board
+                    </div>
                     <PopoverClose asChild ref={closedRef}>
                         <Button
                             variant={"ghost"}
-                            className="absolute top-2 right-2 focus-visible:ring-0 focus-visible:ring-offset-0"
+                            className="h-auto w-auto p-2 absolute top-2 right-2 text-neutral-600"
                         >
-                            <X />
+                            <X className="w-4 h-4"/>
                         </Button>
                     </PopoverClose>
 
                     <form action={onSubmit}>
+                        <div className="space-y-4">
+
                         <FormPicker id="image" errors={fieldErrors} />
                         <FormInput
                             label="Board title"
                             id="title"
                             errors={fieldErrors}
                         />
-                        <FormSubmit>Create</FormSubmit>
+                        <FormSubmit className="w-full">Create</FormSubmit>
+
+                        </div>
                     </form>
                 </PopoverContent>
             </Popover>

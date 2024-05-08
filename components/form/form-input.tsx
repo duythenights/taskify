@@ -36,11 +36,11 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(({
 
 
      return (
-        <div>
-            <div>
+        <div className="space-y-2">
+            <div className="space-y-1">
 
             {
-                label && <Label htmlFor={id}>{label}</Label>
+                label && <Label htmlFor={id} className="text-xs font-semibold text-neutral-700">{label}</Label>
             } 
             <Input 
                 onBlur={onBlur}       
@@ -52,7 +52,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(({
                 placeholder={placeholder}
                 type={type}
                 disabled={pending || disabled}
-                className={cn("text-sm", className)} 
+                className={cn("text-sm px-2 py-1 h-7", className)} 
                 aria-describedby={`${id}-error`}
             />
             </div>

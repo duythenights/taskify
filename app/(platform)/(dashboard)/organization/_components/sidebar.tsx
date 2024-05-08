@@ -50,12 +50,16 @@ export default function Sidebar({
     if (!isLoadedOrg || !isLoadedOrgList || userMemberships.isLoading) {
         return (
             <>
-               <div className="flex flex-col gap-2">
-                <Skeleton className="w-full h-10"/>
-                <Skeleton className="w-full h-10"/>
-                <Skeleton className="w-full h-10"/>
-                <Skeleton className="w-full h-10"/>
-                </div> 
+                <div className="flex items-center justify-between mb-2">
+                    <Skeleton className="w-[50%] h-10" />
+                    <Skeleton className="w-10 h-10" />
+                </div>
+
+                <div className="space-y-2">
+                    <NavItem.Skeleton />
+                    <NavItem.Skeleton />
+                    <NavItem.Skeleton />
+                </div>
             </>
         );
     }
@@ -64,13 +68,22 @@ export default function Sidebar({
         <>
             <div className="font-medium text-xs flex items-center mb-1">
                 <span className="pl-4">Workspace</span>
-                <Button variant={"ghost"} className="ml-auto" type="button" size={"icon"}>
+                <Button
+                    variant={"ghost"}
+                    className="ml-auto"
+                    type="button"
+                    size={"icon"}
+                >
                     <Link href={"/select-org"}>
                         <Plus className="w-4 h4" />
                     </Link>
                 </Button>
             </div>
-            <Accordion type="multiple" defaultValue={defaultAccordionValue} className="space-y-2">
+            <Accordion
+                type="multiple"
+                defaultValue={defaultAccordionValue}
+                className="space-y-2"
+            >
                 {userMemberships.data.map(({ organization }) => (
                     <NavItem
                         key={organization.id}
