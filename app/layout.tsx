@@ -25,6 +25,10 @@ export const metadata: Metadata = {
                 "9PumzXW11nmoseJ0kYOZTAwTllq43zy7M_7Pks5klIw",
         },
     },
+    other: {
+        name: "google-site-verification",
+        content: "ewawsLX9_9TZyMFjdeqxxGSWXpYSk6vUaAgtwwqakFE",
+    },
 };
 
 export default function RootLayout({
