@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     ],
     verification: {
         google: "9PumzXW11nmoseJ0kYOZTAwTllq43zy7M_7Pks5klIw",
+        other: {
+            "google-site-verification":
+                "9PumzXW11nmoseJ0kYOZTAwTllq43zy7M_7Pks5klIw",
+        },
     },
 };
 
