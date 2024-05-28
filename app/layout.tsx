@@ -18,6 +18,9 @@ export const metadata: Metadata = {
             href: "/logo.svg",
         },
     ],
+    verification: {
+        google: "9PumzXW11nmoseJ0kYOZTAwTllq43zy7M_7Pks5klIw",
+    },
 };
 
 export default function RootLayout({
